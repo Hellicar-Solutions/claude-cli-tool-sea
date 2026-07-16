@@ -10,7 +10,7 @@ import { evaluate } from './engine';
 import { normaliseCommands } from './normalise';
 import { ExecV3InputSchema, ExecV3OutputSchema, ExecV3ToolDescription } from './schema';
 
-export function createExecV3(fs: IFileSystem, executor: IExecutor) {
+export function createExecV3(fs: IFileSystem, executor: IExecutor, rules = builtinRules) {
   return defineTool({
     name: 'ExecV3',
     operation: 'write',
@@ -73,7 +73,7 @@ export function createExecV3(fs: IFileSystem, executor: IExecutor) {
       // surfaced as a `refused` outcome, not a fabricated command result.
       const { allowed, errors } = validate(
         commands.map((c) => ({ program: c.program, args: c.args, merge_stderr: false })),
-        builtinRules,
+        rules,
       );
       if (!allowed) {
         throw new ToolRefusedError(errors.join('\n'));
