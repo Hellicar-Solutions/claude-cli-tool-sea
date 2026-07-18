@@ -9,7 +9,7 @@ import { ExecInputSchema, ExecOutputSchema, ExecToolDescription } from './schema
 import { stripAnsi } from './stripAnsi';
 import { validate } from './validate';
 
-export function createExec(fs: IFileSystem, executor: IExecutor) {
+export function createExec(fs: IFileSystem, executor: IExecutor, rules = builtinRules) {
   return defineTool({
     name: 'Exec',
     operation: 'write',
@@ -34,7 +34,7 @@ export function createExec(fs: IFileSystem, executor: IExecutor) {
       const cwd = process.cwd();
       const normalised = normaliseInput(input, fs);
       const allCommands = normalised.steps.flatMap((s) => s.commands);
-      const { allowed, errors } = validate(allCommands, builtinRules);
+      const { allowed, errors } = validate(allCommands, rules);
 
       if (!allowed) {
         return {

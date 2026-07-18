@@ -1,0 +1,6 @@
+{
+  "main": "/Users/stephen/repos/shellicar/claude-swe/vendor/claude-cli/apps/tool-sea/dist/main-execv2.mjs",
+  "output": "/Users/stephen/repos/shellicar/claude-swe/vendor/claude-cli/apps/tool-sea/dist/sea-prep-v2.blob",
+  "mainFormat": "module",
+  "disableExperimentalSEAWarning": true
+}

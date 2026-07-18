@@ -31,7 +31,7 @@ function normaliseTree(pipeline: Pipeline, fs: IFileSystem): Pipeline {
   };
 }
 
-export function createExecV2(fs: IFileSystem, executor: IExecutor) {
+export function createExecV2(fs: IFileSystem, executor: IExecutor, rules = builtinRules) {
   return defineTool({
     name: 'ExecV2',
     operation: 'write',
@@ -53,7 +53,7 @@ export function createExecV2(fs: IFileSystem, executor: IExecutor) {
       // V2 inherits V1's blocked-command validation. The rules walk every leaf.
       const errors: string[] = [];
       const leavesAsV1 = leaves as unknown as Parameters<(typeof builtinRules)[number]['check']>[0];
-      for (const rule of builtinRules) {
+      for (const rule of rules) {
         const err = rule.check(leavesAsV1);
         if (err) {
           errors.push(`[${rule.name}] ${err}`);
